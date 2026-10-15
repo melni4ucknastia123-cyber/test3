@@ -85,7 +85,6 @@
     animation: fadeIn 0.5s ease;
   }
 
-  /* ===== ШАПКА С ЛОГОТИПОМ И ПОЛЬЗОВАТЕЛЕМ ===== */
   .brand-header {
     display: flex;
     align-items: center;
@@ -111,9 +110,7 @@
     flex-shrink: 0;
   }
 
-  .brand-logo:hover svg {
-    transform: rotate(45deg);
-  }
+  .brand-logo:hover svg { transform: rotate(45deg); }
 
   .brand-logo .brand-text {
     font-size: 18px;
@@ -133,7 +130,6 @@
     margin-top: 4px;
   }
 
-  /* Бейдж пользователя — нейтральные цвета */
   .user-badge {
     display: inline-flex;
     align-items: center;
@@ -148,8 +144,7 @@
   }
 
   .user-badge .dot {
-    width: 9px;
-    height: 9px;
+    width: 9px; height: 9px;
     border-radius: 50%;
     background: var(--success);
     box-shadow: 0 0 10px var(--success);
@@ -157,7 +152,6 @@
 
   .user-badge span { color: var(--text); }
 
-  /* Прогресс в шапке — нейтральный цвет */
   .progress-info {
     font-size: 14px;
     color: var(--muted);
@@ -165,10 +159,7 @@
     white-space: nowrap;
   }
 
-  .progress-info b {
-    color: var(--text);
-    font-weight: 700;
-  }
+  .progress-info b { color: var(--text); font-weight: 700; }
 
   .progress-bar {
     height: 8px;
@@ -187,7 +178,6 @@
     box-shadow: 0 0 14px rgba(0, 198, 255, 0.6);
   }
 
-  /* ===== ЗАГОЛОВОК ТЕСТА ===== */
   h1.quiz-title {
     font-size: 24px;
     font-weight: 700;
@@ -197,7 +187,6 @@
     line-height: 1.35;
   }
 
-  /* Подзаголовок — серо-голубой, не синий */
   h1.quiz-title small {
     display: block;
     font-size: 15px;
@@ -223,7 +212,7 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* ================= РЕГИСТРАЦИЯ ================= */
+  /* ================= РЕГИСТРАЦИЯ / ВХОД ================= */
   #registerScreen {
     display: block;
     max-width: 520px;
@@ -232,9 +221,7 @@
     padding: 40px 0 20px;
   }
 
-  .reg-header {
-    margin-bottom: 34px;
-  }
+  .reg-header { margin-bottom: 34px; }
 
   .reg-title {
     font-size: 28px;
@@ -268,9 +255,7 @@
     margin-bottom: 8px;
   }
 
-  .input-wrap {
-    position: relative;
-  }
+  .input-wrap { position: relative; }
 
   .input-wrap input {
     width: 100%;
@@ -300,6 +285,26 @@
     font-size: 18px;
     opacity: 0.6;
     pointer-events: none;
+  }
+
+  /* Кнопка-переключатель «показать пароль» */
+  .toggle-pass {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .toggle-pass:hover {
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.06);
   }
 
   .btn-primary {
@@ -343,6 +348,13 @@
     display: block;
   }
 
+  .reg-message.info {
+    background: rgba(0, 198, 255, 0.12);
+    color: #bfe6ff;
+    border: 1px solid rgba(0, 198, 255, 0.35);
+    display: block;
+  }
+
   /* ================= "УЖЕ ПРОШЁЛ" ================= */
   #alreadyPassedScreen {
     display: none;
@@ -354,8 +366,7 @@
   }
 
   .already-icon {
-    width: 90px;
-    height: 90px;
+    width: 90px; height: 90px;
     margin: 0 auto 22px;
     display: flex;
     align-items: center;
@@ -520,8 +531,7 @@
     appearance: none;
     -webkit-appearance: none;
     margin-top: 2px;
-    width: 20px;
-    height: 20px;
+    width: 20px; height: 20px;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
     cursor: pointer;
@@ -542,8 +552,7 @@
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 7px;
-    height: 7px;
+    width: 7px; height: 7px;
     border-radius: 50%;
     background: white;
   }
@@ -752,11 +761,15 @@
 <body>
 <div class="container">
 
-  <!-- ================= РЕГИСТРАЦИЯ ================= -->
+  <!-- ================= РЕГИСТРАЦИЯ / ВХОД ================= -->
   <div id="registerScreen">
     <div class="reg-header">
       <h2 class="reg-title">Тест по охране труда</h2>
-      <p class="reg-sub">Зарегистрируйтесь, чтобы начать. Тест проходится один раз, за каждый правильный ответ — 1 балл.</p>
+      <p class="reg-sub">
+        Зарегистрируйтесь или войдите в свою учётную запись.<br>
+        Если логин уже занят — введите свой пароль, чтобы войти.<br>
+        Тест проходится один раз, за каждый правильный ответ — 1 балл.
+      </p>
     </div>
     <div class="reg-form">
       <div>
@@ -766,6 +779,24 @@
           <input type="text" id="regName" placeholder="Иванов Иван" autocomplete="off" maxlength="60">
         </div>
       </div>
+
+      <div>
+        <label for="regLogin">Логин</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔑</span>
+          <input type="text" id="regLogin" placeholder="ivanov" autocomplete="username" maxlength="40">
+        </div>
+      </div>
+
+      <div>
+        <label for="regPassword">Пароль</label>
+        <div class="input-wrap">
+          <span class="input-icon">🔒</span>
+          <input type="password" id="regPassword" placeholder="••••••••" autocomplete="current-password" maxlength="60">
+          <button type="button" class="toggle-pass" id="togglePass" title="Показать / скрыть пароль">👁</button>
+        </div>
+      </div>
+
       <button class="btn-primary" id="startBtn">Начать тест →</button>
       <div class="reg-message" id="regMessage"></div>
     </div>
@@ -783,7 +814,6 @@
   <!-- ================= ЭКРАН ТЕСТА ================= -->
   <div id="quizScreen">
 
-    <!-- Шапка с логотипом и пользователем -->
     <div class="brand-header">
       <div class="brand-logo">
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Логотип">
@@ -1233,13 +1263,16 @@
 
   const TOTAL_QUESTIONS = 30;
   const MAX_SCORE = 30;
-  const STORAGE_KEY = 'quiz_users_data_v2';
+  const STORAGE_KEY = 'quiz_users_data_v3';
 
   // ========== ЭЛЕМЕНТЫ ==========
   const registerScreen = document.getElementById('registerScreen');
   const alreadyPassedScreen = document.getElementById('alreadyPassedScreen');
   const quizScreen = document.getElementById('quizScreen');
   const regName = document.getElementById('regName');
+  const regLogin = document.getElementById('regLogin');
+  const regPassword = document.getElementById('regPassword');
+  const togglePass = document.getElementById('togglePass');
   const startBtn = document.getElementById('startBtn');
   const regMessage = document.getElementById('regMessage');
   const alreadyText = document.getElementById('alreadyText');
@@ -1263,8 +1296,8 @@
   function saveUsers(users) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
   }
-  function normalizeName(name) {
-    return name.trim().replace(/\s+/g, ' ').toLowerCase();
+  function normalizeLogin(login) {
+    return login.trim().toLowerCase();
   }
   function displayName(name) {
     return name.trim().replace(/\s+/g, ' ');
@@ -1292,7 +1325,7 @@
   // ========== ЗАВЕРШЕНИЕ СЕАНСА ==========
   function endSession() {
     sessionStorage.removeItem('quiz_current_user');
-    sessionStorage.removeItem('quiz_current_user_key');
+    sessionStorage.removeItem('quiz_current_user_login');
     form.reset();
     resultDiv.innerHTML = '';
     resultDiv.classList.remove('visible');
@@ -1305,20 +1338,41 @@
     document.querySelectorAll('.explanation').forEach(el => el.classList.remove('show'));
     form.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = false);
     regName.value = '';
+    regLogin.value = '';
+    regPassword.value = '';
+    regPassword.type = 'password';
+    togglePass.textContent = '👁';
     regMessage.className = 'reg-message';
+    regMessage.textContent = '';
     updateProgress();
     showScreen(registerScreen);
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setTimeout(() => regName.focus(), 100);
   }
 
-  // ========== РЕГИСТРАЦИЯ ==========
+  // ========== ПОКАЗ / СКРЫТИЕ ПАРОЛЯ ==========
+  togglePass.addEventListener('click', () => {
+    if (regPassword.type === 'password') {
+      regPassword.type = 'text';
+      togglePass.textContent = '🙈';
+    } else {
+      regPassword.type = 'password';
+      togglePass.textContent = '👁';
+    }
+  });
+
+  // ========== РЕГИСТРАЦИЯ / ВХОД ==========
   startBtn.addEventListener('click', () => {
     const name = displayName(regName.value);
-    regMessage.className = 'reg-message';
+    const login = normalizeLogin(regLogin.value);
+    const password = regPassword.value;
 
+    regMessage.className = 'reg-message';
+    regMessage.textContent = '';
+
+    // --- Валидация ---
     if (!name || name.length < 2) {
-      regMessage.textContent = 'Пожалуйста, введите имя (минимум 2 символа).';
+      regMessage.textContent = 'Пожалуйста, введите имя и фамилию (минимум 2 символа).';
       regMessage.classList.add('error');
       return;
     }
@@ -1327,21 +1381,47 @@
       regMessage.classList.add('error');
       return;
     }
+    if (!login || login.length < 3) {
+      regMessage.textContent = 'Логин должен содержать минимум 3 символа.';
+      regMessage.classList.add('error');
+      return;
+    }
+    if (!/^[a-z0-9._-]+$/.test(login)) {
+      regMessage.textContent = 'Логин может содержать только латинские буквы, цифры, точку, дефис и подчёркивание.';
+      regMessage.classList.add('error');
+      return;
+    }
+    if (!password || password.length < 4) {
+      regMessage.textContent = 'Пароль должен содержать минимум 4 символа.';
+      regMessage.classList.add('error');
+      return;
+    }
 
     const users = loadUsers();
-    const key = normalizeName(name);
+    const existing = users[login];
 
-    if (users[key]) {
-      const u = users[key];
+    // --- Вход существующего пользователя ---
+    if (existing) {
+      if (existing.password !== password) {
+        regMessage.textContent = 'Неверный пароль. Попробуйте снова.';
+        regMessage.classList.add('error');
+        return;
+      }
+      // Пароль верный — показываем результат
+      const u = existing;
       alreadyText.textContent = `Пользователь «${u.name}» уже проходил(а) этот тест ${u.date}.`;
       alreadyScore.textContent = `Результат: ${u.score} ${declOfNum(u.score, ['балл', 'балла', 'баллов'])} из ${u.total}`;
+      sessionStorage.setItem('quiz_current_user', u.name);
+      sessionStorage.setItem('quiz_current_user_login', login);
       showScreen(alreadyPassedScreen);
       return;
     }
 
+    // --- Регистрация нового пользователя ---
     currentUserName.textContent = name;
     sessionStorage.setItem('quiz_current_user', name);
-    sessionStorage.setItem('quiz_current_user_key', key);
+    sessionStorage.setItem('quiz_current_user_login', login);
+    sessionStorage.setItem('quiz_current_password', password);
 
     form.reset();
     resultDiv.innerHTML = '';
@@ -1360,8 +1440,11 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
-  regName.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') { e.preventDefault(); startBtn.click(); }
+  // Enter в любом из полей = нажатие кнопки
+  [regName, regLogin, regPassword].forEach(el => {
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); startBtn.click(); }
+    });
   });
 
   logoutBtnAlready.addEventListener('click', endSession);
@@ -1426,20 +1509,28 @@
     resultDiv.classList.add('visible');
 
     const name = sessionStorage.getItem('quiz_current_user');
-    const key = sessionStorage.getItem('quiz_current_user_key');
+    const login = sessionStorage.getItem('quiz_current_user_login');
+    const password = sessionStorage.getItem('quiz_current_password');
 
-    if (name && key) {
+    if (name && login) {
       const users = loadUsers();
       const now = new Date();
       const dateStr = now.toLocaleString('ru-RU', {
         day: '2-digit', month: '2-digit', year: 'numeric',
         hour: '2-digit', minute: '2-digit'
       });
-      users[key] = {
-        name: name, score: score, total: MAX_SCORE,
-        percent: percent, date: dateStr
+      // Если пользователь уже был — сохраняем его пароль, иначе — новый
+      const existingPass = users[login] ? users[login].password : password;
+      users[login] = {
+        name: name,
+        password: existingPass || password,
+        score: score,
+        total: MAX_SCORE,
+        percent: percent,
+        date: dateStr
       };
       saveUsers(users);
+      sessionStorage.removeItem('quiz_current_password');
     }
 
     checkBtn.disabled = true;
@@ -1455,12 +1546,12 @@
   // ========== ИНИЦИАЛИЗАЦИЯ ==========
   (function init() {
     const currentName = sessionStorage.getItem('quiz_current_user');
-    const currentKey = sessionStorage.getItem('quiz_current_user_key');
+    const currentLogin = sessionStorage.getItem('quiz_current_user_login');
 
-    if (currentName && currentKey) {
+    if (currentName && currentLogin) {
       const users = loadUsers();
-      if (users[currentKey]) {
-        const u = users[currentKey];
+      if (users[currentLogin]) {
+        const u = users[currentLogin];
         alreadyText.textContent = `Пользователь «${u.name}» уже проходил(а) этот тест ${u.date}.`;
         alreadyScore.textContent = `Результат: ${u.score} ${declOfNum(u.score, ['балл', 'балла', 'баллов'])} из ${u.total}`;
         showScreen(alreadyPassedScreen);
