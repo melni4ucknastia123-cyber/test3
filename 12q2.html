@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тест по охране труда — Программа «А»</title>
+<style>
+  :root {
+    --bg-1: #0f2027;
+    --bg-2: #203a43;
+    --bg-3: #2c5364;
+    --accent: #00c6ff;
+    --accent-2: #0072ff;
+    --accent-soft: rgba(0, 198, 255, 0.15);
+    --text: #eaf4ff;
+    --muted: #9fb4c7;
+    --success: #22c55e;
+    --success-soft: rgba(34, 197, 94, 0.15);
+    --danger: #ef4444;
+    --danger-soft: rgba(239, 68, 68, 0.15);
+    --radius-lg: 24px;
+    --radius-md: 16px;
+    --radius-sm: 12px;
+    --shadow-glow: 0 20px 60px rgba(0, 198, 255, 0.15);
+    --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  * {
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, Roboto, Arial, sans-serif;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  body {
+    background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+    background-attachment: fixed;
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 16px;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::before {
+    width: 500px; height: 500px;
+    background: var(--accent);
+    top: -150px; left: -150px;
+  }
+  body::after {
+    width: 600px; height: 600px;
+    background: #7b2ff7;
+    bottom: -200px; right: -200px;
+    opacity: 0.25;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 960px;
+    position: relative;
+    z-index: 1;
+    background: rgba(15, 32, 39, 0.65);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-glow), var(--shadow-card);
+    padding: 40px 44px;
+    animation: fadeIn 0.5s ease;
+  }
+
+  /* ===== ШАПКА С ЛОГОТИПОМ И ПОЛЬЗОВАТЕЛЕМ ===== */
+  .brand-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 22px;
+  }
+
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .brand-logo svg {
+    width: 56px;
+    height: 56px;
+    filter: drop-shadow(0 4px 14px rgba(230, 57, 70, 0.5));
+    transition: transform 0.4s ease;
+    flex-shrink: 0;
+  }
+
+  .brand-logo:hover svg {
+    transform: rotate(45deg);
+  }
+
+  .brand-logo .brand-text {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #ffffff;
+    line-height: 1.15;
+  }
+
+  .brand-logo .brand-text small {
+    display: block;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* Бейдж пользователя — нейтральные цвета */
+  .user-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    padding: 10px 20px;
+    border-radius: 60px;
+    font-size: 14.5px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .user-badge .dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 10px var(--success);
+  }
+
+  .user-badge span { color: var(--text); }
+
+  /* Прогресс в шапке — нейтральный цвет */
+  .progress-info {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .progress-info b {
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .progress-bar {
+    height: 8px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    margin-bottom: 30px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--accent), #7b2ff7);
+    transition: width 0.35s ease;
+    box-shadow: 0 0 14px rgba(0, 198, 255, 0.6);
+  }
+
+  /* ===== ЗАГОЛОВОК ТЕСТА ===== */
+  h1.quiz-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 10px;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+    line-height: 1.35;
+  }
+
+  /* Подзаголовок — серо-голубой, не синий */
+  h1.quiz-title small {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--muted);
+    margin-top: 8px;
+    letter-spacing: 0.2px;
+  }
+
+  .subhead {
+    color: var(--muted);
+    margin: 0 0 28px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .subhead b { color: var(--text); font-weight: 700; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ================= РЕГИСТРАЦИЯ ================= */
+  #registerScreen {
+    display: block;
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 40px 0 20px;
+  }
+
+  .reg-header {
+    margin-bottom: 34px;
+  }
+
+  .reg-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    color: #ffffff;
+    letter-spacing: -0.4px;
+  }
+
+  .reg-sub {
+    color: var(--muted);
+    font-size: 15.5px;
+    line-height: 1.6;
+    margin: 0 auto;
+  }
+
+  .reg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    text-align: left;
+  }
+
+  .reg-form label {
+    display: block;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+  }
+
+  .input-wrap {
+    position: relative;
+  }
+
+  .input-wrap input {
+    width: 100%;
+    padding: 16px 20px 16px 52px;
+    font-size: 16px;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    outline: none;
+    transition: all 0.25s ease;
+  }
+
+  .input-wrap input::placeholder { color: rgba(159, 180, 199, 0.5); }
+
+  .input-wrap input:focus {
+    border-color: var(--accent);
+    background: rgba(0, 198, 255, 0.06);
+    box-shadow: 0 0 0 4px rgba(0, 198, 255, 0.12);
+  }
+
+  .input-wrap .input-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .btn-primary {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 17px 40px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.25s ease;
+    box-shadow: 0 12px 28px rgba(0, 114, 255, 0.35);
+    letter-spacing: 0.3px;
+    margin-top: 6px;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(0, 198, 255, 0.5);
+  }
+
+  .btn-primary:active { transform: translateY(0); }
+
+  .reg-message {
+    text-align: center;
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    font-weight: 500;
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .reg-message.error {
+    background: var(--danger-soft);
+    color: #ff9a9a;
+    border: 1px solid rgba(239, 68, 68, 0.35);
+    display: block;
+  }
+
+  /* ================= "УЖЕ ПРОШЁЛ" ================= */
+  #alreadyPassedScreen {
+    display: none;
+    text-align: center;
+    padding: 40px 20px 30px;
+    max-width: 520px;
+    margin: 0 auto;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .already-icon {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--success), #16a34a);
+    font-size: 46px;
+    box-shadow: 0 14px 40px rgba(34, 197, 94, 0.4);
+    animation: pop 0.5s ease;
+  }
+
+  @keyframes pop {
+    0% { transform: scale(0.4); opacity: 0; }
+    70% { transform: scale(1.08); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .already-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #ffffff;
+  }
+
+  .already-text {
+    font-size: 16px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .already-score {
+    display: inline-block;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 20px 0;
+    padding: 12px 28px;
+    border-radius: 60px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .btn-ghost {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    padding: 13px 32px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 18px;
+  }
+
+  .btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  /* ================= ТЕСТ ================= */
+  #quizScreen { display: none; animation: fadeIn 0.4s ease; }
+
+  .question {
+    background: rgba(255, 255, 255, 0.045);
+    border: 1.5px solid rgba(255, 255, 255, 0.07);
+    border-radius: var(--radius-md);
+    padding: 22px 24px;
+    margin-bottom: 16px;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .question::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .question:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(0, 198, 255, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .question:hover::before { opacity: 1; }
+
+  .q-text {
+    font-weight: 600;
+    font-size: 16.5px;
+    margin-bottom: 16px;
+    color: #ffffff;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .q-num {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: white;
+    border-radius: 10px;
+    min-width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0, 198, 255, 0.35);
+  }
+
+  .q-score {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    background: rgba(255, 255, 255, 0.06);
+    padding: 5px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+    align-self: center;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .option {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    cursor: pointer;
+    padding: 13px 16px;
+    border-radius: var(--radius-sm);
+    transition: all 0.18s ease;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.025);
+    border: 1.5px solid transparent;
+  }
+
+  .option:hover {
+    background: rgba(0, 198, 255, 0.08);
+    border-color: rgba(0, 198, 255, 0.25);
+  }
+
+  .option input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+    margin-top: 2px;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.2s ease;
+    background: transparent;
+  }
+
+  .option input[type="radio"]:checked {
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(0, 198, 255, 0.2);
+  }
+
+  .option input[type="radio"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: white;
+  }
+
+  .option span { flex: 1; }
+
+  .option.correct-highlight {
+    background: var(--success-soft) !important;
+    border-color: rgba(34, 197, 94, 0.5) !important;
+    color: #d4ffd4;
+  }
+
+  .option.correct-highlight input[type="radio"] {
+    border-color: var(--success);
+    background: var(--success);
+  }
+
+  .option.wrong-highlight {
+    background: var(--danger-soft) !important;
+    border-color: rgba(239, 68, 68, 0.5) !important;
+    color: #ffd4d4;
+  }
+
+  .option.wrong-highlight input[type="radio"] {
+    border-color: var(--danger);
+    background: var(--danger);
+  }
+
+  .explanation {
+    margin-top: 14px;
+    font-size: 13.5px;
+    color: #c6e1ff;
+    background: rgba(0, 198, 255, 0.08);
+    padding: 12px 18px;
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--accent);
+    display: none;
+    line-height: 1.5;
+  }
+
+  .explanation.show {
+    display: block;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .explanation::before {
+    content: '📘 ';
+    margin-right: 4px;
+  }
+
+  .btn-check {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 18px 40px;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 28px;
+    transition: transform 0.15s ease, box-shadow 0.25s ease;
+    box-shadow: 0 14px 32px rgba(0, 114, 255, 0.4);
+    letter-spacing: 0.4px;
+  }
+
+  .btn-check:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px rgba(0, 198, 255, 0.55);
+  }
+
+  .btn-check:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--muted);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  .result {
+    margin-top: 24px;
+    padding: 32px 24px;
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    text-align: center;
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .result.visible { display: block; }
+
+  .result .score-line {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .result .score-line span {
+    display: inline-block;
+    font-size: 44px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 6px;
+    vertical-align: middle;
+  }
+
+  .result .percent-line {
+    font-size: 15px;
+    color: var(--muted);
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .result .unanswered-line {
+    font-size: 14px;
+    color: #ff9a9a;
+    margin-top: 8px;
+  }
+
+  .result .grade-line {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 11px 30px;
+    border-radius: 60px;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .grade-excellent { background: linear-gradient(135deg, #16a34a, #22c55e); box-shadow: 0 8px 24px rgba(34,197,94,0.4); }
+  .grade-good      { background: linear-gradient(135deg, #0072ff, #00c6ff); box-shadow: 0 8px 24px rgba(0,114,255,0.4); }
+  .grade-satisfactory { background: linear-gradient(135deg, #d97706, #f59e0b); box-shadow: 0 8px 24px rgba(245,158,11,0.4); }
+  .grade-bad       { background: linear-gradient(135deg, #dc2626, #ef4444); box-shadow: 0 8px 24px rgba(239,68,68,0.4); }
+
+  .legend {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 14px;
+    text-align: center;
+  }
+
+  .legend .dot-green,
+  .legend .dot-red {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    margin: 0 6px 0 14px;
+    vertical-align: middle;
+  }
+  .legend .dot-green { background: var(--success); }
+  .legend .dot-red { background: var(--danger); }
+
+  #finishSessionBtn {
+    display: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    padding: 15px 40px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 14px;
+    transition: all 0.2s ease;
+  }
+
+  #finishSessionBtn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  #finishSessionBtn.visible { display: block; }
+
+  @media (max-width: 700px) {
+    .container { padding: 26px 20px; border-radius: 20px; }
+    .reg-title { font-size: 22px; }
+    h1.quiz-title { font-size: 19px; }
+    h1.quiz-title small { font-size: 13.5px; }
+    .q-text { font-size: 15px; }
+    .option { font-size: 14px; padding: 12px 14px; }
+    .q-score { display: none; }
+    .brand-header { flex-direction: column; align-items: flex-start; }
+    .user-badge { align-self: flex-start; }
+    .progress-info { align-self: flex-end; }
+    .result .score-line span { font-size: 36px; }
+    .brand-logo svg { width: 46px; height: 46px; }
+    .brand-logo .brand-text { font-size: 15px; }
+    #registerScreen, #alreadyPassedScreen { padding-top: 10px; }
+  }
+
+  @media (max-width: 420px) {
+    body { padding: 12px 8px; }
+    .container { padding: 20px 15px; }
+    .q-num { min-width: 28px; height: 28px; font-size: 13px; }
+    .brand-logo .brand-text { font-size: 13px; }
+    .brand-logo .brand-text small { font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ================= РЕГИСТРАЦИЯ ================= -->
+  <div id="registerScreen">
+    <div class="reg-header">
+      <h2 class="reg-title">Тест по охране труда</h2>
+      <p class="reg-sub">Зарегистрируйтесь, чтобы начать. Тест проходится один раз, за каждый правильный ответ — 1 балл.</p>
+    </div>
+    <div class="reg-form">
+      <div>
+        <label for="regName">Имя и фамилия</label>
+        <div class="input-wrap">
+          <span class="input-icon">👤</span>
+          <input type="text" id="regName" placeholder="Иванов Иван" autocomplete="off" maxlength="60">
+        </div>
+      </div>
+      <button class="btn-primary" id="startBtn">Начать тест →</button>
+      <div class="reg-message" id="regMessage"></div>
+    </div>
+  </div>
+
+  <!-- ================= ЭКРАН "УЖЕ ПРОШЁЛ" ================= -->
+  <div id="alreadyPassedScreen">
+    <div class="already-icon">✓</div>
+    <div class="already-title">Вы уже проходили тест</div>
+    <div class="already-text" id="alreadyText"></div>
+    <div class="already-score" id="alreadyScore"></div>
+    <button class="btn-ghost" id="logoutBtnAlready">Завершить сеанс</button>
+  </div>
+
+  <!-- ================= ЭКРАН ТЕСТА ================= -->
+  <div id="quizScreen">
+
+    <!-- Шапка с логотипом и пользователем -->
+    <div class="brand-header">
+      <div class="brand-logo">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Логотип">
+          <path d="M50 8 C 28 8, 12 22, 10 42 C 9 52, 13 60, 20 66 C 16 56, 18 44, 26 36 C 34 28, 44 26, 50 28 Z" fill="#c8102e"/>
+          <path d="M92 50 C 92 28, 78 12, 58 10 C 48 9, 40 13, 34 20 C 44 16, 56 18, 64 26 C 72 34, 74 44, 72 50 Z" fill="#c8102e"/>
+          <path d="M50 92 C 72 92, 88 78, 90 58 C 91 48, 87 40, 80 34 C 84 44, 82 56, 74 64 C 66 72, 56 74, 50 72 Z" fill="#c8102e"/>
+          <path d="M8 50 C 8 72, 22 88, 42 90 C 52 91, 60 87, 66 80 C 56 84, 44 82, 36 74 C 28 66, 26 56, 28 50 Z" fill="#c8102e"/>
+          <circle cx="50" cy="50" r="18" fill="#c8102e"/>
+          <g stroke="#ffffff" stroke-width="0.9" fill="none" opacity="0.85">
+            <circle cx="50" cy="50" r="3"/>
+            <circle cx="50" cy="50" r="6"/>
+            <circle cx="50" cy="50" r="9"/>
+            <circle cx="50" cy="50" r="12"/>
+            <circle cx="50" cy="50" r="15"/>
+            <line x1="50" y1="35" x2="50" y2="47"/>
+            <line x1="50" y1="53" x2="50" y2="65"/>
+            <line x1="35" y1="50" x2="47" y2="50"/>
+            <line x1="53" y1="50" x2="65" y2="50"/>
+            <line x1="39.4" y1="39.4" x2="47.9" y2="47.9"/>
+            <line x1="52.1" y1="52.1" x2="60.6" y2="60.6"/>
+            <line x1="60.6" y1="39.4" x2="52.1" y2="47.9"/>
+            <line x1="47.9" y1="52.1" x2="39.4" y2="60.6"/>
+          </g>
+        </svg>
+        <div class="brand-text">
+          ОХРАНА ТРУДА
+          <small>Программа «А»</small>
+        </div>
+      </div>
+
+      <div class="user-badge"><span class="dot"></span>👤 <span id="currentUserName"></span></div>
+      <div class="progress-info">Отвечено: <b id="answeredCount">0</b> / 30</div>
+    </div>
+
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+    <h1 class="quiz-title">
+      Проверка знаний требований охраны труда
+    </h1>
+    <p class="subhead">Выберите один правильный ответ. За каждый правильный ответ начисляется <b>1 балл</b>. Максимум: <b>30 баллов</b>.</p>
+
+    <form id="quizForm">
+      <!-- Вопрос 1 -->
+      <div class="question" data-q="1">
+        <div class="q-text"><span class="q-num">1</span><span>Для чего выдаются средства индивидуальной защиты?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q1" value="А"><span>А) Для защиты работникам, занятым на работах с вредными и (или) опасными условиями труда</span></label>
+          <label class="option"><input type="radio" name="q1" value="Б"><span>Б) Для защиты от воздействия вредных и (или) опасных факторов производственной среды и (или) загрязнения, а также на работах, выполняемых в особых температурных условиях</span></label>
+          <label class="option"><input type="radio" name="q1" value="В"><span>В) Для защиты работникам, занятым на работах в особых температурных условиях</span></label>
+          <label class="option"><input type="radio" name="q1" value="Г"><span>Г) Для защиты работникам, занятым на работах, связанных с загрязнением</span></label>
+        </div>
+        <div class="explanation">ТК РФ Статья 221. Обеспечение работников средствами индивидуальной защиты</div>
+      </div>
+
+      <!-- Вопрос 2 -->
+      <div class="question" data-q="2">
+        <div class="q-text"><span class="q-num">2</span><span>В случае задержки выплаты заработной платы на какой срок работник имеет право приостановить работу, известив об этом работодателя в письменной форме?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q2" value="Более 15 дней"><span>Более 15 дней</span></label>
+          <label class="option"><input type="radio" name="q2" value="14 дней"><span>14 дней</span></label>
+          <label class="option"><input type="radio" name="q2" value="3 дня"><span>3 дня</span></label>
+        </div>
+        <div class="explanation">ТК РФ Статья 142. Ответственность работодателя за нарушение сроков выплаты заработной платы</div>
+      </div>
+
+      <!-- Вопрос 3 -->
+      <div class="question" data-q="3">
+        <div class="q-text"><span class="q-num">3</span><span>Для какого вида инженерного оборудования должны предусматриваться помещения и устройства в зданиях?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q3" value="Только для отопления, вентиляции и кондиционирования"><span>Только для отопления, вентиляции и кондиционирования</span></label>
+          <label class="option"><input type="radio" name="q3" value="Только для внутреннего водопровода и канализации"><span>Только для внутреннего водопровода и канализации</span></label>
+          <label class="option"><input type="radio" name="q3" value="Только для установок электроснабжения"><span>Только для установок электроснабжения</span></label>
+          <label class="option"><input type="radio" name="q3" value="Только для электрических пассажирских лифтов"><span>Только для электрических пассажирских лифтов</span></label>
+          <label class="option"><input type="radio" name="q3" value="Только для вертикальных мусоропроводов"><span>Только для вертикальных мусоропроводов</span></label>
+          <label class="option"><input type="radio" name="q3" value="Для всего перечисленного оборудования"><span>Для всего перечисленного оборудования</span></label>
+        </div>
+        <div class="explanation">СП 44.13330.2011 п. 3.4</div>
+      </div>
+
+      <!-- Вопрос 4 -->
+      <div class="question" data-q="4">
+        <div class="q-text"><span class="q-num">4</span><span>Как производится погрузка и разгрузка грузов, превышающих длину кузова транспортного средства на 2 м и более?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q4" value="Вручную двумя грузчиками"><span>Вручную двумя грузчиками</span></label>
+          <label class="option"><input type="radio" name="q4" value="С обязательным применением канатов. Эта работа выполняется не менее чем двумя работниками"><span>С обязательным применением канатов. Эта работа выполняется не менее чем двумя работниками</span></label>
+        </div>
+        <div class="explanation">Приказ Минтруда РФ от 28.10.2020 N 753Н п. 60</div>
+      </div>
+
+      <!-- Вопрос 5 -->
+      <div class="question" data-q="5">
+        <div class="q-text"><span class="q-num">5</span><span>Какие классы условий труда по степени вредности и (или) опасности соответствуют оптимальным и допустимым условиям труда?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q5" value="3 и 4 классы"><span>3 и 4 классы</span></label>
+          <label class="option"><input type="radio" name="q5" value="1 и 2 классы"><span>1 и 2 классы</span></label>
+          <label class="option"><input type="radio" name="q5" value="Только 1 класс"><span>Только 1 класс</span></label>
+        </div>
+        <div class="explanation">N 426-ФЗ Статья 14. Классификация условий труда</div>
+      </div>
+
+      <!-- Вопрос 6 -->
+      <div class="question" data-q="6">
+        <div class="q-text"><span class="q-num">6</span><span>Какая максимальная скорость движения автотранспортного средства разрешается на территории организации и в производственных помещениях?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q6" value="А"><span>А) Скорость движения транспортных средств по территории организации, в производственных и других помещениях устанавливается работодателем в зависимости от конкретных условий с учетом интенсивности движения транспортных средств, состояния дорог, перевозимого груза и пассажиров</span></label>
+          <label class="option"><input type="radio" name="q6" value="Б"><span>Б) 15 км/ч</span></label>
+        </div>
+        <div class="explanation">Приказ Минтруда России от 09.12.2020 N 871н п. 204</div>
+      </div>
+
+      <!-- Вопрос 7 -->
+      <div class="question" data-q="7">
+        <div class="q-text"><span class="q-num">7</span><span>Как правильно надо надавливать на грудину при непрямом массаже сердца?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q7" value="Используя силу выпрямленных в локтях рук"><span>Используя силу выпрямленных в локтях рук</span></label>
+          <label class="option"><input type="radio" name="q7" value="Используя силу всего тела"><span>Используя силу всего тела</span></label>
+          <label class="option"><input type="radio" name="q7" value="Используя тяжесть тела"><span>Используя тяжесть тела</span></label>
+          <label class="option"><input type="radio" name="q7" value="Используя силу согнутых в локтях рук"><span>Используя силу согнутых в локтях рук</span></label>
+        </div>
+      </div>
+
+      <!-- Вопрос 8 -->
+      <div class="question" data-q="8">
+        <div class="q-text"><span class="q-num">8</span><span>Что из перечисленного НЕ является направлением государственной политики в области охраны труда?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q8" value="Принятие и реализация нормативных правовых актов РФ в области охраны труда"><span>Принятие и реализация нормативных правовых актов РФ в области охраны труда</span></label>
+          <label class="option"><input type="radio" name="q8" value="Обеспечение отсутствия несчастных случаев и повреждения здоровья работников"><span>Обеспечение отсутствия несчастных случаев и повреждения здоровья работников</span></label>
+          <label class="option"><input type="radio" name="q8" value="Государственная экспертиза условий труда"><span>Государственная экспертиза условий труда</span></label>
+          <label class="option"><input type="radio" name="q8" value="Установление гарантий и компенсаций за работу с вредными и (или) опасными условиями труда"><span>Установление гарантий и компенсаций за работу с вредными и (или) опасными условиями труда</span></label>
+          <label class="option"><input type="radio" name="q8" value="Организация государственной статистической отчетности об условиях труда, производственном травматизме, профессиональной заболеваемости"><span>Организация государственной статистической отчетности об условиях труда, производственном травматизме, профессиональной заболеваемости</span></label>
+        </div>
+        <div class="explanation">ТК РФ Статья 210</div>
+      </div>
+
+      <!-- Вопрос 9 -->
+      <div class="question" data-q="9">
+        <div class="q-text"><span class="q-num">9</span><span>Что из перечисленного не входит в задачи службы охраны труда организации?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q9" value="А"><span>А) Организация работы по обеспечению выполнения работниками требований охраны труда</span></label>
+          <label class="option"><input type="radio" name="q9" value="Б"><span>Б) Контроль за соблюдением работниками требований законодательных актов в области охраны труда, коллективного договора, соглашения по охране труда, других локальных нормативных правовых актов организации</span></label>
+          <label class="option"><input type="radio" name="q9" value="В"><span>В) Организация профилактической работы по предупреждению производственного травматизма, профессиональных заболеваний и заболеваний, обусловленных производственными факторами, а также работы по улучшению условий труда</span></label>
+          <label class="option"><input type="radio" name="q9" value="Г"><span>Г) Организация и контроль за соблюдением трудовой дисциплины, требований правил внутреннего трудового распорядка</span></label>
+        </div>
+      </div>
+
+      <!-- Вопрос 10 -->
+      <div class="question" data-q="10">
+        <div class="q-text"><span class="q-num">10</span><span>Элементы привода роликов роликовых конвейеров должны быть …</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q10" value="А"><span>А) Ограждены</span></label>
+          <label class="option"><input type="radio" name="q10" value="Б"><span>Б) Отмечены указателями</span></label>
+          <label class="option"><input type="radio" name="q10" value="В"><span>В) Окрашены в красный сигнальный цвет</span></label>
+        </div>
+        <div class="explanation">Приказ Минтруда России от 18.11.2020 N 814н п.208</div>
+      </div>
+
+      <!-- Вопрос 11 -->
+      <div class="question" data-q="11">
+        <div class="q-text"><span class="q-num">11</span><span>В какие сроки работники рабочих профессий, принимаемые на работу с вредными и (или) опасными условиями труда, проходят обучение и проверку знаний требований охраны труда?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q11" value="В течение двух месяцев после назначения на эти работы"><span>В течение двух месяцев после назначения на эти работы</span></label>
+          <label class="option"><input type="radio" name="q11" value="В течение первого месяца после назначения на эти работы"><span>В течение первого месяца после назначения на эти работы</span></label>
+          <label class="option"><input type="radio" name="q11" value="В течение трех месяцев после назначения на эти работы"><span>В течение трех месяцев после назначения на эти работы</span></label>
+          <label class="option"><input type="radio" name="q11" value="По мере готовности рабочего к сдаче экзамена"><span>По мере готовности рабочего к сдаче экзамена</span></label>
+        </div>
+      </div>
+
+      <!-- Вопрос 12 -->
+      <div class="question" data-q="12">
+        <div class="q-text"><span class="q-num">12</span><span>Какие из указанных требований по обеспечению безопасности рабочего места не относятся к обязанностям работодателя?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q12" value="Безопасность работников при эксплуатации зданий, сооружений, оборудования, осуществлении технологических процессов, а также эксплуатации применяемых в производстве инструментов, сырья и материалов"><span>Безопасность работников при эксплуатации зданий, сооружений, оборудования, осуществлении технологических процессов, а также эксплуатации применяемых в производстве инструментов, сырья и материалов</span></label>
+          <label class="option"><input type="radio" name="q12" value="Организация и проведение мероприятий по обучению и подготовке работников организации к аттестации"><span>Организация и проведение мероприятий по обучению и подготовке работников организации к аттестации</span></label>
+          <label class="option"><input type="radio" name="q12" value="Соответствие каждого рабочего места государственным нормативным требованиям охраны труда"><span>Соответствие каждого рабочего места государственным нормативным требованиям охраны труда</span></label>
+          <label class="option"><input type="radio" name="q12" value="Создание и функционирование системы управления охраной труда"><span>Создание и функционирование системы управления охраной труда</span></label>
+        </div>
+        <div class="explanation">ТК РФ Статья 214. Обязанности работодателя в области охраны труда</div>
+      </div>
+
+      <!-- Вопрос 13 -->
+      <div class="question" data-q="13">
+        <div class="q-text"><span class="q-num">13</span><span>Какой вид наказания НЕ предусмотрен УК РФ за нарушение требований охраны труда, совершенное лицом, на которое возложены обязанности по их соблюдению?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q13" value="Штраф"><span>Штраф</span></label>
+          <label class="option"><input type="radio" name="q13" value="Обязательные работы"><span>Обязательные работы</span></label>
+          <label class="option"><input type="radio" name="q13" value="Исправительные работы"><span>Исправительные работы</span></label>
+          <label class="option"><input type="radio" name="q13" value="Принудительные работы"><span>Принудительные работы</span></label>
+          <label class="option"><input type="radio" name="q13" value="Ограничение свободы"><span>Ограничение свободы</span></label>
+          <label class="option"><input type="radio" name="q13" value="Лишение свободы на определенный срок"><span>Лишение свободы на определенный срок</span></label>
+        </div>
+        <div class="explanation">УК РФ Статья 44. Виды наказаний</div>
+      </div>
+
+      <!-- Вопрос 14 -->
+      <div class="question" data-q="14">
+        <div class="q-text"><span class="q-num">14</span><span>С помощью какого оборудования должно осуществляться освещение при производстве сварочных работ внутри металлических емкостей?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q14" value="С помощью светильников, установленных снаружи, или переносных ручных электрических светильников напряжением не выше 12 В"><span>С помощью светильников, установленных снаружи, или переносных ручных электрических светильников напряжением не выше 12 В</span></label>
+          <label class="option"><input type="radio" name="q14" value="Только с помощью ручных переносных ламп напряжением не более 36 В"><span>Только с помощью ручных переносных ламп напряжением не более 36 В</span></label>
+          <label class="option"><input type="radio" name="q14" value="С помощью специальных светильников во взрывобезопасном исполнении напряжением не выше 24 В, устанавливаемых внутри емкости"><span>С помощью специальных светильников во взрывобезопасном исполнении напряжением не выше 24 В, устанавливаемых внутри емкости</span></label>
+          <label class="option"><input type="radio" name="q14" value="С помощью специальных ручных переносных ламп во взрывобезопасном исполнении напряжением не выше 42 В"><span>С помощью специальных ручных переносных ламп во взрывобезопасном исполнении напряжением не выше 42 В</span></label>
+        </div>
+        <div class="explanation">Приказ от 11 декабря 2020 года N 884н п.</div>
+      </div>
+
+      <!-- Вопрос 15 -->
+      <div class="question" data-q="15">
+        <div class="q-text"><span class="q-num">15</span><span>В каких электроустановках могут выполняться работы в порядке текущей эксплуатации?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q15" value="В электроустановках напряжением до 1000 В"><span>В электроустановках напряжением до 1000 В</span></label>
+          <label class="option"><input type="radio" name="q15" value="В электроустановках напряжением выше 1000 В"><span>В электроустановках напряжением выше 1000 В</span></label>
+          <label class="option"><input type="radio" name="q15" value="В любых электроустановках"><span>В любых электроустановках</span></label>
+          <label class="option"><input type="radio" name="q15" value="Только в электроустановках с простой наглядной схемой"><span>Только в электроустановках с простой наглядной схемой</span></label>
+        </div>
+        <div class="explanation">Приказ Министерства труда от 15 декабря 2020 г. N 903н п 3.1</div>
+      </div>
+
+      <!-- Вопрос 16 -->
+      <div class="question" data-q="16">
+        <div class="q-text"><span class="q-num">16</span><span>Каким из перечисленных способов должны храниться газовые баллоны, не имеющие башмаков?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q16" value="Только в вертикальном положении в специальных гнездах, клетях и других устройствах, исключающих их падение"><span>Только в вертикальном положении в специальных гнездах, клетях и других устройствах, исключающих их падение</span></label>
+          <label class="option"><input type="radio" name="q16" value="В горизонтальном положении на рамах или стеллажах. Высота штабеля в этом случае не должна превышать 1,5 м. Клапаны (вентили) баллонов закрываются предохранительными колпаками и должны обращаться в одну сторону"><span>В горизонтальном положении на рамах или стеллажах. Высота штабеля в этом случае не должна превышать 1,5 м. Клапаны (вентили) баллонов закрываются предохранительными колпаками и должны обращаться в одну сторону</span></label>
+          <label class="option"><input type="radio" name="q16" value="Как в вертикальном, так и в горизонтальном положении"><span>Как в вертикальном, так и в горизонтальном положении</span></label>
+          <label class="option"><input type="radio" name="q16" value="Только в горизонтальном положении под углом 30° к поверхности пола"><span>Только в горизонтальном положении под углом 30° к поверхности пола</span></label>
+        </div>
+        <div class="explanation">Приказ от 11 декабря 2020 года N 884н п.140</div>
+      </div>
+
+      <!-- Вопрос 17 -->
+      <div class="question" data-q="17">
+        <div class="q-text"><span class="q-num">17</span><span>Каков правильный порядок проведения сердечно-легочной реанимации?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q17" value="Восстановление проходимости верхних дыхательных путей, искусственная вентиляция легких, наружный (непрямой) массаж сердца"><span>Восстановление проходимости верхних дыхательных путей, искусственная вентиляция легких, наружный (непрямой) массаж сердца</span></label>
+          <label class="option"><input type="radio" name="q17" value="Искусственная вентиляция легких, восстановление проходимости верхних дыхательных путей, наружный (непрямой) массаж сердца"><span>Искусственная вентиляция легких, восстановление проходимости верхних дыхательных путей, наружный (непрямой) массаж сердца</span></label>
+          <label class="option"><input type="radio" name="q17" value="Наружный (непрямой) массаж сердца, восстановление проходимости верхних дыхательных путей, искусственная вентиляция легких"><span>Наружный (непрямой) массаж сердца, восстановление проходимости верхних дыхательных путей, искусственная вентиляция легких</span></label>
+        </div>
+        <div class="explanation">Реанимация проводится на ровной и твердой поверхности.</div>
+      </div>
+
+      <!-- Вопрос 18 -->
+      <div class="question" data-q="18">
+        <div class="q-text"><span class="q-num">18</span><span>Где не предусматривается эвакуационное освещение?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q18" value="В проходах по маршруту эвакуации"><span>В проходах по маршруту эвакуации</span></label>
+          <label class="option"><input type="radio" name="q18" value="В местах перепада уровня пола или покрытия"><span>В местах перепада уровня пола или покрытия</span></label>
+          <label class="option"><input type="radio" name="q18" value="На рабочих местах"><span>На рабочих местах</span></label>
+          <label class="option"><input type="radio" name="q18" value="В зонах изменения маршрута эвакуации"><span>В зонах изменения маршрута эвакуации</span></label>
+          <label class="option"><input type="radio" name="q18" value="На лестничных маршах"><span>На лестничных маршах</span></label>
+          <label class="option"><input type="radio" name="q18" value="Перед каждым эвакуационным выходом"><span>Перед каждым эвакуационным выходом</span></label>
+        </div>
+        <div class="explanation">ГОСТ Р 55842-2013 п.3.3</div>
+      </div>
+
+      <!-- Вопрос 19 -->
+      <div class="question" data-q="19">
+        <div class="q-text"><span class="q-num">19</span><span>Как часто проводится периодическое обучение безопасным методам и приемам выполнения работ на высоте работников 3 группы по безопасности работ на высоте?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q19" value="Не реже 1 раза в 5 лет"><span>Не реже 1 раза в 5 лет</span></label>
+          <label class="option"><input type="radio" name="q19" value="Не реже 1 раза в 2 года"><span>Не реже 1 раза в 2 года</span></label>
+          <label class="option"><input type="radio" name="q19" value="Не реже 1 раза в 3 года"><span>Не реже 1 раза в 3 года</span></label>
+          <label class="option"><input type="radio" name="q19" value="Ежегодно"><span>Ежегодно</span></label>
+        </div>
+        <div class="explanation">Приказ Минтруда России от 16.01.2020 №782н п.23</div>
+      </div>
+
+      <!-- Вопрос 20 -->
+      <div class="question" data-q="20">
+        <div class="q-text"><span class="q-num">20</span><span>Какая форма участия работников в управлении организацией НЕ предусмотрена?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q20" value="Учет мнения представительного органа работников в случаях, предусмотренных законодательством"><span>Учет мнения представительного органа работников в случаях, предусмотренных законодательством</span></label>
+          <label class="option"><input type="radio" name="q20" value="Участие в разработке и принятии локальных нормативных актов, связанных с обеспечением трудового законодательства"><span>Участие в разработке и принятии локальных нормативных актов, связанных с обеспечением трудового законодательства</span></label>
+          <label class="option"><input type="radio" name="q20" value="Обсуждение с работодателем вопросов о работе организации, внесение предложений по ее совершенствованию"><span>Обсуждение с работодателем вопросов о работе организации, внесение предложений по ее совершенствованию</span></label>
+          <label class="option"><input type="radio" name="q20" value="Обсуждение представительным органом работников планов социально-экономического развития организации"><span>Обсуждение представительным органом работников планов социально-экономического развития организации</span></label>
+          <label class="option"><input type="radio" name="q20" value="Участие в разработке и принятии коллективных договоров"><span>Участие в разработке и принятии коллективных договоров</span></label>
+        </div>
+        <div class="explanation">Статья 53. Основные формы участия работников в управлении организацией</div>
+      </div>
+
+      <!-- Вопрос 21 -->
+      <div class="question" data-q="21">
+        <div class="q-text"><span class="q-num">21</span><span>Каким образом грузчикам разрешается переносить бутыли с кислотой и другими едкими веществами?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q21" value="На спине или с помощью специальных корзин"><span>На спине или с помощью специальных корзин</span></label>
+          <label class="option"><input type="radio" name="q21" value="На плечах"><span>На плечах</span></label>
+          <label class="option"><input type="radio" name="q21" value="На руках"><span>На руках</span></label>
+          <label class="option"><input type="radio" name="q21" value="На приспособленных для этого носилках, тележках, тачках"><span>На приспособленных для этого носилках, тележках, тачках</span></label>
+        </div>
+        <div class="explanation">Приказ Минтруда РФ от 28.10.2020 N 753Н п. 141</div>
+      </div>
+
+      <!-- Вопрос 22 -->
+      <div class="question" data-q="22">
+        <div class="q-text"><span class="q-num">22</span><span>На что направлены государственные нормативные требования охраны труда?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q22" value="На обеспечение безопасности опасных производственных объектов в процессе их эксплуатации"><span>На обеспечение безопасности опасных производственных объектов в процессе их эксплуатации</span></label>
+          <label class="option"><input type="radio" name="q22" value="На сохранение безопасности производственного оборудования, участвующего в производственных процессах"><span>На сохранение безопасности производственного оборудования, участвующего в производственных процессах</span></label>
+          <label class="option"><input type="radio" name="q22" value="На сохранение жизни и здоровья работников в процессе трудовой деятельности"><span>На сохранение жизни и здоровья работников в процессе трудовой деятельности</span></label>
+          <label class="option"><input type="radio" name="q22" value="На уменьшение влияния вредных и (или) опасных производственных факторов на окружающую среду"><span>На уменьшение влияния вредных и (или) опасных производственных факторов на окружающую среду</span></label>
+        </div>
+        <div class="explanation">ТК РФ Статья 212 Государственные нормативные требования охраны труда</div>
+      </div>
+
+      <!-- Вопрос 23 -->
+      <div class="question" data-q="23">
+        <div class="q-text"><span class="q-num">23</span><span>Подлежит ли расследованию и учету несчастный случай, происшедший с работником во время следования на работу на общественном транспорте?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q23" value="Да, подлежит, если несчастный случай произошёл в рабочее время"><span>Да, подлежит, если несчастный случай произошёл в рабочее время</span></label>
+        </div>
+        <div class="explanation">Приказ Роскомторга от 28.06.1993 N 44 п. 6.4</div>
+      </div>
+
+      <!-- Вопрос 24 -->
+      <div class="question" data-q="24">
+        <div class="q-text"><span class="q-num">24</span><span>Какова оптимальная частота вдувания при искусственном дыхании?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q24" value="15-17 в минуту"><span>15-17 в минуту</span></label>
+          <label class="option"><input type="radio" name="q24" value="8-10 в минуту"><span>8-10 в минуту</span></label>
+          <label class="option"><input type="radio" name="q24" value="12-15 в минуту"><span>12-15 в минуту</span></label>
+        </div>
+      </div>
+
+      <!-- Вопрос 25 -->
+      <div class="question" data-q="25">
+        <div class="q-text"><span class="q-num">25</span><span>Что из перечисленного относится к вредным и (или) опасным факторам трудового процесса?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q25" value="Монотонность и однообразие трудового процесса"><span>Монотонность и однообразие трудового процесса</span></label>
+          <label class="option"><input type="radio" name="q25" value="Тяжесть и напряженность трудового процесса"><span>Тяжесть и напряженность трудового процесса</span></label>
+          <label class="option"><input type="radio" name="q25" value="Травмоопасность трудового процесса"><span>Травмоопасность трудового процесса</span></label>
+          <label class="option"><input type="radio" name="q25" value="Физические нагрузки на опорно-двигательный аппарат"><span>Физические нагрузки на опорно-двигательный аппарат</span></label>
+        </div>
+        <div class="explanation">N 426-ФЗ Статья 13</div>
+      </div>
+
+      <!-- Вопрос 26 -->
+      <div class="question" data-q="26">
+        <div class="q-text"><span class="q-num">26</span><span>При каком условии разрешается перевозка людей в кузовах грузовых автомобилей, не оборудованных для перевозки пассажиров?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q26" value="Если машина оборудована местом для сидения, расположенным на уровне бортов"><span>Если машина оборудована местом для сидения, расположенным на уровне бортов</span></label>
+          <label class="option"><input type="radio" name="q26" value="Если автомобиль движется со скоростью не более 20 км/час"><span>Если автомобиль движется со скоростью не более 20 км/час</span></label>
+          <label class="option"><input type="radio" name="q26" value="Перевозка людей в кузове запрещена (лица, сопровождающие (получающие) грузы, должны размещаться только в кабине грузового транспортного средства)"><span>Перевозка людей в кузове запрещена (лица, сопровождающие (получающие) грузы, должны размещаться только в кабине грузового транспортного средства)</span></label>
+        </div>
+        <div class="explanation">Приказ Минтруда России от 09.12.2020 N 871н п. 208</div>
+      </div>
+
+      <!-- Вопрос 27 -->
+      <div class="question" data-q="27">
+        <div class="q-text"><span class="q-num">27</span><span>Что не входит в обязанности работодателя при несчастном случае на производстве?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q27" value="Организация первой помощи пострадавшему"><span>Организация первой помощи пострадавшему</span></label>
+          <label class="option"><input type="radio" name="q27" value="Доставка пострадавшего в медицинскую организацию"><span>Доставка пострадавшего в медицинскую организацию</span></label>
+          <label class="option"><input type="radio" name="q27" value="Независимо от тяжести несчастного случая сообщить в течение 7 дней в органы и организации по месту происшествия несчастного случая, указанные в ТК РФ"><span>Независимо от тяжести несчастного случая сообщить в течение 7 дней в органы и организации по месту происшествия несчастного случая, указанные в ТК РФ</span></label>
+          <label class="option"><input type="radio" name="q27" value="Предотвращение развития аварийной ситуации и воздействия травмирующих факторов на других лиц"><span>Предотвращение развития аварийной ситуации и воздействия травмирующих факторов на других лиц</span></label>
+          <label class="option"><input type="radio" name="q27" value="Сохранность до начала расследования несчастного случая обстановки, какой она была на момент происшествия"><span>Сохранность до начала расследования несчастного случая обстановки, какой она была на момент происшествия</span></label>
+          <label class="option"><input type="radio" name="q27" value="Организация и обеспечение надлежащего и своевременного расследования несчастного случая"><span>Организация и обеспечение надлежащего и своевременного расследования несчастного случая</span></label>
+        </div>
+        <div class="explanation">ТК РФ Статья 228. Обязанности работодателя при несчастном случае</div>
+      </div>
+
+      <!-- Вопрос 28 -->
+      <div class="question" data-q="28">
+        <div class="q-text"><span class="q-num">28</span><span>Какое из перечисленных требований безопасности не предъявляется к рабочим местам?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q28" value="Соответствие конструкции, размеров и взаимного расположения элементов (органов управления, средств отображения информации, кресла, вспомогательного оборудования и т.д.) антропометрическим, физиологическим и психофизиологическим свойствам человека"><span>Соответствие конструкции, размеров и взаимного расположения элементов (органов управления, средств отображения информации, кресла, вспомогательного оборудования и т.д.) антропометрическим, физиологическим и психофизиологическим свойствам человека</span></label>
+          <label class="option"><input type="radio" name="q28" value="Не превышение уровней опасных и вредных производственных факторов установленных предельно допустимых значений"><span>Не превышение уровней опасных и вредных производственных факторов установленных предельно допустимых значений</span></label>
+          <label class="option"><input type="radio" name="q28" value="Обеспечение необходимого обзора зоны наблюдения"><span>Обеспечение необходимого обзора зоны наблюдения</span></label>
+          <label class="option"><input type="radio" name="q28" value="Наличие достаточной освещенности соответствующей характеру и условиям выполняемой работы"><span>Наличие достаточной освещенности соответствующей характеру и условиям выполняемой работы</span></label>
+          <label class="option"><input type="radio" name="q28" value="Обеспечение безопасного доступа и возможности быстрой эвакуации при аварийной ситуации"><span>Обеспечение безопасного доступа и возможности быстрой эвакуации при аварийной ситуации</span></label>
+          <label class="option"><input type="radio" name="q28" value="Наличие аварийной сигнализации на рабочем месте"><span>Наличие аварийной сигнализации на рабочем месте</span></label>
+        </div>
+        <div class="explanation">ГОСТ 12.2.061-81</div>
+      </div>
+
+      <!-- Вопрос 29 -->
+      <div class="question" data-q="29">
+        <div class="q-text"><span class="q-num">29</span><span>Какой документ составляется по результатам государственной экспертизы условий труда?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q29" value="Акт о соответствии (несоответствии) условий труда государственным нормативным требованиям охраны труда"><span>Акт о соответствии (несоответствии) условий труда государственным нормативным требованиям охраны труда</span></label>
+          <label class="option"><input type="radio" name="q29" value="Заключения о соответствии (несоответствии) условий труда государственным нормативным требованиям охраны труда"><span>Заключения о соответствии (несоответствии) условий труда государственным нормативным требованиям охраны труда</span></label>
+          <label class="option"><input type="radio" name="q29" value="План мероприятий по улучшению условий труда"><span>План мероприятий по улучшению условий труда</span></label>
+          <label class="option"><input type="radio" name="q29" value="Протокол состояния условий труда"><span>Протокол состояния условий труда</span></label>
+        </div>
+        <div class="explanation">ТК РФ Статья 213 Государственная экспертиза условий труда</div>
+      </div>
+
+      <!-- Вопрос 30 -->
+      <div class="question" data-q="30">
+        <div class="q-text"><span class="q-num">30</span><span>Какое из перечисленных обстоятельств классифицирует несчастный случай, как не связанный с производством?</span><span class="q-score">1 балл</span></div>
+        <div class="options">
+          <label class="option"><input type="radio" name="q30" value="А"><span>А) Только смерть вследствие общего заболевания или самоубийства, подтвержденная в установленном порядке соответственно медицинской организацией, органами следствия или судом</span></label>
+          <label class="option"><input type="radio" name="q30" value="Б"><span>Б) Только смерть или повреждение здоровья, единственной причиной которых явилось по заключению медицинской организации алкогольное, наркотическое или иное токсическое опьянение (отравление) пострадавшего, не связанное с нарушениями технологического процесса, в котором используются технические спирты, ароматические, наркотические и иные токсические вещества</span></label>
+          <label class="option"><input type="radio" name="q30" value="В"><span>В) Только несчастный случай, происшедший при совершении пострадавшим действий (бездействий), квалифицированных правоохранительными органами как уголовно наказуемое деяние</span></label>
+          <label class="option"><input type="radio" name="q30" value="Г"><span>Г) Все перечисленные обстоятельства</span></label>
+        </div>
+        <div class="explanation">ТК РФ Статья 229.2. Порядок проведения расследования несчастных случаев</div>
+      </div>
+    </form>
+
+    <button class="btn-check" id="checkBtn">Завершить тест</button>
+
+    <div class="result" id="result"></div>
+
+    <div class="legend">
+      <span class="dot-green"></span>правильный ответ
+      <span class="dot-red"></span>ваш неверный выбор
+    </div>
+
+    <button id="finishSessionBtn">🚪 Завершить сеанс</button>
+  </div>
+
+</div>
+
+<script>
+  // ========== КЛЮЧ ПРАВИЛЬНЫХ ОТВЕТОВ ==========
+  const correctAnswers = {
+    1: "Б",
+    2: "Более 15 дней",
+    3: "Для всего перечисленного оборудования",
+    4: "С обязательным применением канатов. Эта работа выполняется не менее чем двумя работниками",
+    5: "1 и 2 классы",
+    6: "А",
+    7: "Используя тяжесть тела",
+    8: "Обеспечение отсутствия несчастных случаев и повреждения здоровья работников",
+    9: "Г",
+    10: "А",
+    11: "В течение первого месяца после назначения на эти работы",
+    12: "Организация и проведение мероприятий по обучению и подготовке работников организации к аттестации",
+    13: "Ограничение свободы",
+    14: "С помощью светильников, установленных снаружи, или переносных ручных электрических светильников напряжением не выше 12 В",
+    15: "В электроустановках напряжением до 1000 В",
+    16: "В горизонтальном положении на рамах или стеллажах. Высота штабеля в этом случае не должна превышать 1,5 м. Клапаны (вентили) баллонов закрываются предохранительными колпаками и должны обращаться в одну сторону",
+    17: "Восстановление проходимости верхних дыхательных путей, искусственная вентиляция легких, наружный (непрямой) массаж сердца",
+    18: "На рабочих местах",
+    19: "Не реже 1 раза в 5 лет",
+    20: "Участие в разработке и принятии локальных нормативных актов, связанных с обеспечением трудового законодательства",
+    21: "На приспособленных для этого носилках, тележках, тачках",
+    22: "На сохранение жизни и здоровья работников в процессе трудовой деятельности",
+    23: "Да, подлежит, если несчастный случай произошёл в рабочее время",
+    24: "15-17 в минуту",
+    25: "Тяжесть и напряженность трудового процесса",
+    26: "Перевозка людей в кузове запрещена (лица, сопровождающие (получающие) грузы, должны размещаться только в кабине грузового транспортного средства)",
+    27: "Независимо от тяжести несчастного случая сообщить в течение 7 дней в органы и организации по месту происшествия несчастного случая, указанные в ТК РФ",
+    28: "Наличие аварийной сигнализации на рабочем месте",
+    29: "Заключения о соответствии (несоответствии) условий труда государственным нормативным требованиям охраны труда",
+    30: "Г"
+  };
+
+  const TOTAL_QUESTIONS = 30;
+  const MAX_SCORE = 30;
+  const STORAGE_KEY = 'quiz_users_data_v2';
+
+  // ========== ЭЛЕМЕНТЫ ==========
+  const registerScreen = document.getElementById('registerScreen');
+  const alreadyPassedScreen = document.getElementById('alreadyPassedScreen');
+  const quizScreen = document.getElementById('quizScreen');
+  const regName = document.getElementById('regName');
+  const startBtn = document.getElementById('startBtn');
+  const regMessage = document.getElementById('regMessage');
+  const alreadyText = document.getElementById('alreadyText');
+  const alreadyScore = document.getElementById('alreadyScore');
+  const logoutBtnAlready = document.getElementById('logoutBtnAlready');
+  const currentUserName = document.getElementById('currentUserName');
+  const form = document.getElementById('quizForm');
+  const checkBtn = document.getElementById('checkBtn');
+  const resultDiv = document.getElementById('result');
+  const finishSessionBtn = document.getElementById('finishSessionBtn');
+  const progressFill = document.getElementById('progressFill');
+  const answeredCount = document.getElementById('answeredCount');
+
+  // ========== ХРАНИЛИЩЕ ==========
+  function loadUsers() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) { return {}; }
+  }
+  function saveUsers(users) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(users));
+  }
+  function normalizeName(name) {
+    return name.trim().replace(/\s+/g, ' ').toLowerCase();
+  }
+  function displayName(name) {
+    return name.trim().replace(/\s+/g, ' ');
+  }
+
+  // ========== ЭКРАНЫ ==========
+  function showScreen(screen) {
+    registerScreen.style.display = 'none';
+    alreadyPassedScreen.style.display = 'none';
+    quizScreen.style.display = 'none';
+    screen.style.display = 'block';
+  }
+
+  // ========== ПРОГРЕСС ==========
+  function updateProgress() {
+    let answered = 0;
+    for (let q = 1; q <= TOTAL_QUESTIONS; q++) {
+      const radios = document.getElementsByName('q' + q);
+      if ([...radios].some(r => r.checked)) answered++;
+    }
+    answeredCount.textContent = answered;
+    progressFill.style.width = (answered / TOTAL_QUESTIONS * 100) + '%';
+  }
+
+  // ========== ЗАВЕРШЕНИЕ СЕАНСА ==========
+  function endSession() {
+    sessionStorage.removeItem('quiz_current_user');
+    sessionStorage.removeItem('quiz_current_user_key');
+    form.reset();
+    resultDiv.innerHTML = '';
+    resultDiv.classList.remove('visible');
+    checkBtn.disabled = false;
+    checkBtn.textContent = 'Завершить тест';
+    finishSessionBtn.classList.remove('visible');
+    document.querySelectorAll('.correct-highlight, .wrong-highlight').forEach(el => {
+      el.classList.remove('correct-highlight', 'wrong-highlight');
+    });
+    document.querySelectorAll('.explanation').forEach(el => el.classList.remove('show'));
+    form.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = false);
+    regName.value = '';
+    regMessage.className = 'reg-message';
+    updateProgress();
+    showScreen(registerScreen);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => regName.focus(), 100);
+  }
+
+  // ========== РЕГИСТРАЦИЯ ==========
+  startBtn.addEventListener('click', () => {
+    const name = displayName(regName.value);
+    regMessage.className = 'reg-message';
+
+    if (!name || name.length < 2) {
+      regMessage.textContent = 'Пожалуйста, введите имя (минимум 2 символа).';
+      regMessage.classList.add('error');
+      return;
+    }
+    if (name.length > 60) {
+      regMessage.textContent = 'Имя слишком длинное (максимум 60 символов).';
+      regMessage.classList.add('error');
+      return;
+    }
+
+    const users = loadUsers();
+    const key = normalizeName(name);
+
+    if (users[key]) {
+      const u = users[key];
+      alreadyText.textContent = `Пользователь «${u.name}» уже проходил(а) этот тест ${u.date}.`;
+      alreadyScore.textContent = `Результат: ${u.score} ${declOfNum(u.score, ['балл', 'балла', 'баллов'])} из ${u.total}`;
+      showScreen(alreadyPassedScreen);
+      return;
+    }
+
+    currentUserName.textContent = name;
+    sessionStorage.setItem('quiz_current_user', name);
+    sessionStorage.setItem('quiz_current_user_key', key);
+
+    form.reset();
+    resultDiv.innerHTML = '';
+    resultDiv.classList.remove('visible');
+    checkBtn.disabled = false;
+    checkBtn.textContent = 'Завершить тест';
+    finishSessionBtn.classList.remove('visible');
+    document.querySelectorAll('.correct-highlight, .wrong-highlight').forEach(el => {
+      el.classList.remove('correct-highlight', 'wrong-highlight');
+    });
+    document.querySelectorAll('.explanation').forEach(el => el.classList.remove('show'));
+    form.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = false);
+    updateProgress();
+
+    showScreen(quizScreen);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  regName.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); startBtn.click(); }
+  });
+
+  logoutBtnAlready.addEventListener('click', endSession);
+  finishSessionBtn.addEventListener('click', endSession);
+
+  // ========== СКЛОНЕНИЕ ==========
+  function declOfNum(n, titles) {
+    const cases = [2, 0, 1, 1, 1, 2];
+    return titles[(n % 100 > 4 && n % 100 < 20) ? 2 : cases[(n % 10 < 5) ? n % 10 : 5]];
+  }
+
+  // ========== ОБНОВЛЕНИЕ ПРОГРЕССА ПРИ ВЫБОРЕ ==========
+  form.addEventListener('change', updateProgress);
+
+  // ========== ПРОВЕРКА ТЕСТА ==========
+  function evaluateQuiz() {
+    let correctCount = 0;
+    let unanswered = 0;
+
+    for (let q = 1; q <= TOTAL_QUESTIONS; q++) {
+      const radios = document.getElementsByName('q' + q);
+      let selectedValue = null;
+      for (let radio of radios) {
+        if (radio.checked) { selectedValue = radio.value; break; }
+      }
+      if (selectedValue === null) unanswered++;
+
+      const questionDiv = document.querySelector(`.question[data-q="${q}"]`);
+      if (!questionDiv) continue;
+
+      const explanationDiv = questionDiv.querySelector('.explanation');
+      if (explanationDiv) explanationDiv.classList.add('show');
+
+      const optionLabels = questionDiv.querySelectorAll('.option');
+      if (selectedValue === correctAnswers[q]) correctCount++;
+
+      optionLabels.forEach(opt => {
+        const input = opt.querySelector('input[type="radio"]');
+        const value = input.value;
+        const isCorrectAnswer = (value === correctAnswers[q]);
+        const isSelected = input.checked;
+        if (isCorrectAnswer) opt.classList.add('correct-highlight');
+        if (isSelected && !isCorrectAnswer) opt.classList.add('wrong-highlight');
+      });
+    }
+
+    const score = correctCount;
+    const percent = Math.round((score / MAX_SCORE) * 100);
+
+    let gradeText, gradeClass;
+    if (percent >= 90) { gradeText = 'Отлично'; gradeClass = 'grade-excellent'; }
+    else if (percent >= 75) { gradeText = 'Хорошо'; gradeClass = 'grade-good'; }
+    else if (percent >= 50) { gradeText = 'Удовлетворительно'; gradeClass = 'grade-satisfactory'; }
+    else { gradeText = 'Неудовлетворительно'; gradeClass = 'grade-bad'; }
+
+    resultDiv.innerHTML = `
+      <div class="score-line">Общий балл: <span>${score}</span> из ${MAX_SCORE}</div>
+      <div class="percent-line">${percent}% правильных ответов</div>
+      ${unanswered > 0 ? `<div class="unanswered-line">Без ответа: ${unanswered}</div>` : ''}
+      <div><span class="grade-line ${gradeClass}">${gradeText}</span></div>
+    `;
+    resultDiv.classList.add('visible');
+
+    const name = sessionStorage.getItem('quiz_current_user');
+    const key = sessionStorage.getItem('quiz_current_user_key');
+
+    if (name && key) {
+      const users = loadUsers();
+      const now = new Date();
+      const dateStr = now.toLocaleString('ru-RU', {
+        day: '2-digit', month: '2-digit', year: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+      users[key] = {
+        name: name, score: score, total: MAX_SCORE,
+        percent: percent, date: dateStr
+      };
+      saveUsers(users);
+    }
+
+    checkBtn.disabled = true;
+    checkBtn.textContent = 'Тест завершён ✓';
+    form.querySelectorAll('input[type="radio"]').forEach(r => r.disabled = true);
+    finishSessionBtn.classList.add('visible');
+
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  checkBtn.addEventListener('click', evaluateQuiz);
+
+  // ========== ИНИЦИАЛИЗАЦИЯ ==========
+  (function init() {
+    const currentName = sessionStorage.getItem('quiz_current_user');
+    const currentKey = sessionStorage.getItem('quiz_current_user_key');
+
+    if (currentName && currentKey) {
+      const users = loadUsers();
+      if (users[currentKey]) {
+        const u = users[currentKey];
+        alreadyText.textContent = `Пользователь «${u.name}» уже проходил(а) этот тест ${u.date}.`;
+        alreadyScore.textContent = `Результат: ${u.score} ${declOfNum(u.score, ['балл', 'балла', 'баллов'])} из ${u.total}`;
+        showScreen(alreadyPassedScreen);
+      } else {
+        currentUserName.textContent = currentName;
+        showScreen(quizScreen);
+        updateProgress();
+      }
+    } else {
+      showScreen(registerScreen);
+    }
+  })();
+</script>
+</body>
+</html>
